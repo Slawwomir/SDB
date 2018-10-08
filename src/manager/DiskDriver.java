@@ -14,7 +14,7 @@ public class DiskDriver {
     private int pointer;
     public static int diskOperationCounter;
     private Scanner scanner;
-    private BufferedReader reader;
+    private java.io.BufferedReader reader;
     private List<Record> readBlock;
     private List<Record> writeBlock;
     private File source;
@@ -30,7 +30,7 @@ public class DiskDriver {
         this.writeBlock = new ArrayList<>(blockSize);
         this.scanner = new Scanner(source);
         scanner.useLocale(Locale.US);
-        reader = new BufferedReader(new FileReader(source));
+        reader = new java.io.BufferedReader(new FileReader(source));
     }
 
     public Record next() throws IOException {
@@ -109,7 +109,7 @@ public class DiskDriver {
 
     public void clearFile() throws IOException {
         new PrintWriter(source).write("");
-        reader = new BufferedReader(new FileReader(source));
+        reader = new java.io.BufferedReader(new FileReader(source));
         scanner = new Scanner(source);
         scanner.useLocale(Locale.US);
     }
