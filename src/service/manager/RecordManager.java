@@ -1,6 +1,6 @@
-package manager;
+package service.manager;
 
-import model.Record;
+import service.model.Record;
 
 import java.io.IOException;
 
@@ -54,5 +54,9 @@ public class RecordManager {
             }
         }
         return minimum;
+    }
+
+    public boolean hasNext() throws IOException {
+        return tp1.hasNext() && tp2.hasNext();
     }
 }

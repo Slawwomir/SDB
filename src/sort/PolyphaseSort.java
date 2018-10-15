@@ -1,8 +1,8 @@
 package sort;
 
-import manager.Tape;
-import model.Record;
-import manager.RecordManager;
+import service.manager.Tape;
+import service.model.Record;
+import service.manager.RecordManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class PolyphaseSort {
     public void sort() throws IOException {
         int phaseNumber = distribute();
 
-        for(int i = 0; i < phaseNumber; i++) {
+        for (int i = 0; i < phaseNumber; i++) {
             merge();
         }
 
@@ -45,10 +45,8 @@ public class PolyphaseSort {
         Tape source = tapes.get(0);
         Tape destination = tapes.get(1);
 
-        Record record;
-
         while (source.hasNext()) {
-            record = source.next();
+            Record record = source.next();
 
             if (destination.getRunsNumber() >= fibonacci.get() && !source.isInRun()) {
                 destination = destination == tapes.get(1) ? tapes.get(2) : tapes.get(1);
@@ -67,26 +65,23 @@ public class PolyphaseSort {
     }
 
     private void merge() throws IOException {
-
         tapes.get(0).openOutput();
         RecordManager manager = new RecordManager(tapes.get(1), tapes.get(2));
 
-        while (tapes.get(1).hasNext() && tapes.get(2).hasNext()) {
+        while (manager.hasNext()) {
             manager.update();
-            Record current = null;
 
-            do {
-                current = manager.getMinimum();
-                if (current != null)
-                    tapes.get(0).push(current);
-                else
+            while (true) {
+                Record current = manager.getMinimum();
+                if (current == null)
                     break;
-            } while (true);
+                tapes.get(0).push(current);
+            }
         }
 
         Tape temp = tapes.get(0);
-        temp.flushOutput();
         temp.flushInput();
+        temp.flushOutput();
 
         if (tapes.get(1).hasNext()) {
             tapes.set(0, tapes.get(2));

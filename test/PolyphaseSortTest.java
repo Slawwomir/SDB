@@ -1,15 +1,12 @@
-import manager.DiskDriver;
+import service.manager.DiskDriver;
 import org.junit.Test;
-
-import javax.xml.crypto.Data;
+import sort.DataFactory;
+import sort.PolyphaseSortDeprecated;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
-
-import static org.junit.Assert.*;
 
 public class PolyphaseSortTest {
 
@@ -57,7 +54,7 @@ public class PolyphaseSortTest {
         System.out.println("\n Step by step for 100 random records");
         factory.createRandomData(100);
         factory.saveToFile("testSort");
-        PolyphaseSort polyphaseSort = new PolyphaseSort("testSort");
+        PolyphaseSortDeprecated polyphaseSort = new PolyphaseSortDeprecated("testSort");
         polyphaseSort.sortAndShowFiles();
     }
 
@@ -66,7 +63,7 @@ public class PolyphaseSortTest {
         //showFile(new File(filename));
 
         System.out.println("Sort " + i + " records: ");
-        PolyphaseSort polyphaseSort = new PolyphaseSort(filename);
+        PolyphaseSortDeprecated polyphaseSort = new PolyphaseSortDeprecated(filename);
         long time = System.currentTimeMillis();
         File sorted = polyphaseSort.sort();
         System.out.println("Time = " + (System.currentTimeMillis() - time) + " ms.");
@@ -115,7 +112,7 @@ public class PolyphaseSortTest {
         fileWriter.close();
         System.out.println("OK!");
 
-        new PolyphaseSort("out.txt").sortAndShowFiles();
+        new PolyphaseSortDeprecated("out.txt").sortAndShowFiles();
         // sortTest(recordsNumber, "out.txt");
     }
 }

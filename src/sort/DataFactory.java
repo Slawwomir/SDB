@@ -1,7 +1,7 @@
 package sort;
 
-import model.Point;
-import model.Record;
+import service.model.Point;
+import service.model.Record;
 
 import java.io.File;
 import java.io.IOException;

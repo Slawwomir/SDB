@@ -1,6 +1,6 @@
-package manager;
+package service.manager;
 
-import model.Record;
+import service.model.Record;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,8 +1,8 @@
-package manager;
+package service.manager;
 
-import buffer.BufferedWriter;
-import model.Point;
-import model.Record;
+import service.buffer.BufferedWriter;
+import service.model.Point;
+import service.model.Record;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

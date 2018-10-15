@@ -1,4 +1,4 @@
-package model;
+package service.model;
 
 import static org.junit.Assert.*;
 

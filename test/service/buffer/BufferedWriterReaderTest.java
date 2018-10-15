@@ -1,4 +1,4 @@
-package manager;
+package service.buffer;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class BufferedWriterReaderTest {
     BufferedWriter bufferedWriter;
 
     public BufferedWriterReaderTest() throws IOException {
-        String fileName = "test" + System.currentTimeMillis();
+        String fileName = "test.txt"; //+ System.currentTimeMillis();
         file = new File(fileName);
 
         if(file.createNewFile()) {
@@ -28,7 +28,7 @@ public class BufferedWriterReaderTest {
     @Test
     public void testWriteReadDoublesToFile() throws IOException {
         Random random = new Random();
-        double[] dbl = random.doubles(100000000).toArray();
+        double[] dbl = random.doubles(6*100).toArray();
 
         for(double d : dbl) {
             bufferedWriter.saveDouble(d);
@@ -38,5 +38,16 @@ public class BufferedWriterReaderTest {
         for(double d : dbl) {
             Assert.assertEquals(bufferedReader.readDouble(), d, 1e-10);
         }
+    }
+
+    @Test
+    public void testWriteData() throws IOException {
+        for(int i = 700000; i >= 0; i--) {
+            for(int j = 0; j < 6; j++) {
+                bufferedWriter.saveDouble((double) i);
+            }
+        }
+
+        bufferedWriter.close();
     }
 }

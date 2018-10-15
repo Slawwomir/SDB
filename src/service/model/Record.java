@@ -1,6 +1,5 @@
-package model;
+package service.model;
 
-import javax.print.DocFlavor;
 import java.util.List;
 
 public class Record implements Comparable<Record> {

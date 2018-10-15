@@ -1,4 +1,4 @@
-package buffer;
+package service.buffer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

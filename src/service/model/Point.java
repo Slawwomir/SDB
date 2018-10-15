@@ -1,4 +1,4 @@
-package model;
+package service.model;
 
 import java.util.Locale;
 
