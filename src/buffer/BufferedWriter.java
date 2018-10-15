@@ -1,4 +1,4 @@
-package manager;
+package buffer;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,23 +7,26 @@ import java.nio.ByteBuffer;
 
 public class BufferedWriter {
     public static final int DOUBLE_SIZE = Double.SIZE / Byte.SIZE;
+    public static int diskOperationCounter;
 
     private int blockSize;                      // in bytes
     private byte[] block;
     private int index;
-    private int diskOperationCounter;
-
+    private String filename;
     private FileOutputStream out;
+
 
     public BufferedWriter(String filename, int blockSize) throws FileNotFoundException {
         this.blockSize = blockSize;
+        this.filename = filename;
         block = new byte[blockSize];
-        out = new FileOutputStream(filename);
     }
 
     public void close() throws IOException {
-        writeBlock();
-        out.close();
+        if(index > 0) {
+            writeBlock();
+            out.close();
+        }
     }
 
     public void saveDouble(Double db) throws IOException {
@@ -46,6 +49,10 @@ public class BufferedWriter {
     }
 
     private void writeBlock() throws IOException {
+        if (out == null) {
+            out = new FileOutputStream(filename);
+        }
+
         out.write(block, 0, index);
         index = 0;
         diskOperationCounter++;

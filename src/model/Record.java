@@ -1,6 +1,7 @@
 package model;
 
 import javax.print.DocFlavor;
+import java.util.List;
 
 public class Record implements Comparable<Record> {
     public static Record MIN = new Record(new Point(0, 0), new Point(0, 0), new Point(0, 0));
@@ -16,8 +17,8 @@ public class Record implements Comparable<Record> {
     }
 
     public double getArea() {
-        return 0.5 * ((A.x - B.x) * (A.y - C.y) + (A.y - B.y) * (A.x - C.x));
-        //return A.x;
+        //return 0.5 * ((A.x - B.x) * (A.y - C.y) + (A.y - B.y) * (A.x - C.x));
+        return A.x;
     }
 
     public static Record min(Record r1, Record r2) {
@@ -40,5 +41,9 @@ public class Record implements Comparable<Record> {
     @Override
     public String toString() {
         return String.format("%s %s %s", A, B, C);
+    }
+
+    public List<Point> getPoints() {
+        return List.of(A, B, C);
     }
 }

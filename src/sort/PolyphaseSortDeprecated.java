@@ -1,3 +1,5 @@
+package sort;
+
 import manager.DiskDriver;
 import manager.TapeManager;
 import model.Record;
@@ -11,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PolyphaseSort {
+public class PolyphaseSortDeprecated {
     public static final int TAPES_NUMBER = 3;
     public static final int BLOCK_SIZE = 100;
 
@@ -19,7 +21,7 @@ public class PolyphaseSort {
 
     private List<TapeManager> tapes;
 
-    public PolyphaseSort(String source) throws IOException {
+    public PolyphaseSortDeprecated(String source) throws IOException {
         tapes = Arrays.asList(new TapeManager(new DiskDriver(BLOCK_SIZE, source)), new TapeManager(new DiskDriver(BLOCK_SIZE, "tape1")), new TapeManager(new DiskDriver(BLOCK_SIZE, "tape2")));
         tapes.get(1).clear();
         tapes.get(2).clear();
@@ -169,7 +171,7 @@ public class PolyphaseSort {
         }
     }
 
-    private class RecordManager {
+    class RecordManager {
         TapeManager tp1;
         TapeManager tp2;
         Record r1;

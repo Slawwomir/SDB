@@ -1,3 +1,5 @@
+package sort;
+
 import model.Point;
 import model.Record;
 

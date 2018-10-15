@@ -92,7 +92,7 @@ public class DiskDriver {
         return pointer != readBlock.size() || !EOF;
     }
 
-    public Record previous() {
+    Record previous() {
         if (pointer > 0) {
             pointer--;
             return readBlock.get(pointer);

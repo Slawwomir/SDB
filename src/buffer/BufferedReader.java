@@ -1,23 +1,21 @@
-package manager;
+package buffer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class BufferedReader {
     public static final int DOUBLE_SIZE = Double.SIZE / Byte.SIZE;
+    public static int diskOperationCounter;
 
     private int blockSize;                      // in bytes
     private byte[] block;
     private int index;
     private int read;
-    private int diskOperationCounter;
     private boolean EOF;
-
+    private boolean empty;
     private FileInputStream in;
-    private FileOutputStream out;
 
     public BufferedReader(String filename, int blockSize) throws FileNotFoundException {
         this.blockSize = blockSize;
@@ -26,16 +24,20 @@ public class BufferedReader {
     }
 
     public void close() throws IOException {
+        EOF = false;
+        index = 0;
+        read = 0;
         in.close();
     }
 
     public Double readDouble() throws IOException {
-        if(EOF && index >= read)
+        if (empty = (EOF && index >= read)) {
             return null;
+        }
 
         Double dd = null;
 
-        if (index + DOUBLE_SIZE < read) {
+        if (index + DOUBLE_SIZE <= read) {
             dd = ByteBuffer.wrap(block, index, DOUBLE_SIZE).getDouble();
             index += DOUBLE_SIZE;
         } else {
@@ -62,5 +64,9 @@ public class BufferedReader {
 
         index = 0;
         diskOperationCounter++;
+    }
+
+    public boolean isEmpty() {
+        return empty = EOF && index >= read;
     }
 }
