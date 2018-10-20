@@ -1,5 +1,6 @@
 package service.manager;
 
+import service.buffer.BufferedBinaryReader;
 import service.model.Record;
 
 import java.io.FileNotFoundException;
@@ -100,11 +101,22 @@ public class Tape {
     }
 
     public void print() throws IOException {
-        flushInput();
+        //flushInput();
+        
+        int diskOperationCounter = BufferedBinaryReader.diskOperationCounter;
+        RecordReader recordReader = new RecordReader(filename, blockSize);
 
-        while (reader.hasNext()) {
-            System.out.println(reader.next());
+        System.out.println("TAPE: " + filename);
+        while (recordReader.hasNext()) {
+            Record record = recordReader.next();
+            System.out.println(record.getArea() + " : " + record);
         }
+
+        if (dummies > 0) {
+            System.out.println("+ " + dummies + " DUMMY RUNS");
+        }
+
+        BufferedBinaryReader.diskOperationCounter = diskOperationCounter;
     }
 
     public void openOutput() throws FileNotFoundException {
@@ -117,5 +129,9 @@ public class Tape {
 
     public void restoreLast() {
         returned = true;
+    }
+
+    public String getFilename() {
+        return filename;
     }
 }

@@ -4,13 +4,13 @@ import service.model.Record;
 
 import java.io.IOException;
 
-public class RecordManager {
+public class TapeManager {
     private Tape tp1;
     private Tape tp2;
     private Record r1;
     private Record r2;
 
-    public RecordManager(Tape tp1, Tape tp2) {
+    public TapeManager(Tape tp1, Tape tp2) {
         this.tp1 = tp1;
         this.tp2 = tp2;
     }

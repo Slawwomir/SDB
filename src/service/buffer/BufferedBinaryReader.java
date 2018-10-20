@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class BufferedReader {
+public class BufferedBinaryReader {
     public static final int DOUBLE_SIZE = Double.SIZE / Byte.SIZE;
     public static int diskOperationCounter;
 
@@ -17,7 +17,7 @@ public class BufferedReader {
     private boolean empty;
     private FileInputStream in;
 
-    public BufferedReader(String filename, int blockSize) throws FileNotFoundException {
+    public BufferedBinaryReader(String filename, int blockSize) throws FileNotFoundException {
         this.blockSize = blockSize;
         block = new byte[blockSize];
         in = new FileInputStream(filename);
@@ -32,6 +32,7 @@ public class BufferedReader {
 
     public Double readDouble() throws IOException {
         if (empty = (EOF && index >= read)) {
+            System.out.println("NULL in readDouble first");
             return null;
         }
 
@@ -52,6 +53,9 @@ public class BufferedReader {
             dd = ByteBuffer.wrap(db).getDouble();
         }
 
+        if(dd == null){
+            System.out.println("dd is null");
+        }
         return dd;
     }
 
@@ -67,6 +71,15 @@ public class BufferedReader {
     }
 
     public boolean isEmpty() {
+        if(index == read && !EOF){
+            try {
+                nextBlock();
+            } catch (IOException e) {
+                System.out.println("Something went wrong:\n\t" + getClass() + "isEmpty()");
+                e.printStackTrace();
+            }
+        }
+
         return empty = EOF && index >= read;
     }
 }

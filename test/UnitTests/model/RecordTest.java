@@ -1,4 +1,7 @@
-package service.model;
+package UnitTests.model;
+
+import service.model.Point;
+import service.model.Record;
 
 import static org.junit.Assert.*;
 

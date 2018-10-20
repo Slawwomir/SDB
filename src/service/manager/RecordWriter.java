@@ -1,6 +1,6 @@
 package service.manager;
 
-import service.buffer.BufferedWriter;
+import service.buffer.BufferedBinaryWriter;
 import service.model.Point;
 import service.model.Record;
 
@@ -8,10 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class RecordWriter {
-    private BufferedWriter writer;
+    private BufferedBinaryWriter writer;
 
     public RecordWriter(String filename, int blockSize) throws FileNotFoundException {
-        writer = new BufferedWriter(filename, blockSize);
+        writer = new BufferedBinaryWriter(filename, blockSize);
     }
 
     public void push(Record record) throws IOException {

@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class BufferedWriter {
+public class BufferedBinaryWriter {
     public static final int DOUBLE_SIZE = Double.SIZE / Byte.SIZE;
     public static int diskOperationCounter;
 
@@ -16,7 +16,7 @@ public class BufferedWriter {
     private FileOutputStream out;
 
 
-    public BufferedWriter(String filename, int blockSize) throws FileNotFoundException {
+    public BufferedBinaryWriter(String filename, int blockSize) throws FileNotFoundException {
         this.blockSize = blockSize;
         this.filename = filename;
         block = new byte[blockSize];
@@ -25,6 +25,9 @@ public class BufferedWriter {
     public void close() throws IOException {
         if(index > 0) {
             writeBlock();
+        }
+        if(out != null) {
+            out.flush();
             out.close();
         }
     }
@@ -54,6 +57,7 @@ public class BufferedWriter {
         }
 
         out.write(block, 0, index);
+        out.flush();
         index = 0;
         diskOperationCounter++;
     }

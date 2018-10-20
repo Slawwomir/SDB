@@ -1,5 +1,6 @@
 package sort;
 
+import service.manager.RecordWriter;
 import service.model.Point;
 import service.model.Record;
 
@@ -52,12 +53,22 @@ public class DataFactory {
         data = Arrays.asList(records);
     }
 
-    public void saveToFile(String filename) throws IOException {
+    public void saveToTxtFile(String filename) throws IOException {
         File file = new File(filename);
         file.createNewFile();
         new PrintWriter(file).write("");
 
         Files.write(file.toPath(), data.stream().map(Record::toString).collect(Collectors.toList()));
+    }
+
+    public void saveToBinaryFile(String filename) throws IOException {
+        RecordWriter recordWriter = new RecordWriter(filename, 4096);
+
+        for (Record record : data) {
+            recordWriter.push(record);
+        }
+
+        recordWriter.close();
     }
 
     public List<Record> getData() {
