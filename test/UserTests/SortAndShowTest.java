@@ -12,7 +12,7 @@ public class SortAndShowTest {
     @Test
     public void showEachOneStepRandomData() throws IOException {
         DataFactory dataFactory = new DataFactory();
-        dataFactory.createRandomData(13);
+        dataFactory.createRandomData(12);
         dataFactory.sortDataReverse();
         dataFactory.saveToBinaryFile("showEachOneStepRandomData.bin");
 

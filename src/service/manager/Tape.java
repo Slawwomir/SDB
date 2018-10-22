@@ -19,6 +19,7 @@ public class Tape {
     private boolean inRun;
     private int runsNumber;
     private boolean returned;
+    private int counter;
 
     public Tape(String filename, int blockSize) throws FileNotFoundException {
         this.filename = filename;
@@ -47,6 +48,7 @@ public class Tape {
         }
 
         if (reader.hasNext()) {
+            counter++;
             Record record = reader.next();
             inRun = previous == null || record.compareTo(previous) >= 0;
             previous = record;
@@ -85,6 +87,7 @@ public class Tape {
         reader.close();
         previous = null;
         returned = false;
+        counter = 0;
         reader = new RecordReader(filename, blockSize);
     }
 
@@ -100,16 +103,18 @@ public class Tape {
         this.dummies = dummies;
     }
 
-    public void print() throws IOException {
+    public void print(boolean all) throws IOException {
         //flushInput();
         
         int diskOperationCounter = BufferedBinaryReader.diskOperationCounter;
         RecordReader recordReader = new RecordReader(filename, blockSize);
 
         System.out.println("TAPE: " + filename);
+        int ct = 0;
         while (recordReader.hasNext()) {
             Record record = recordReader.next();
-            System.out.println(record.getArea() + " : " + record);
+            if((all || ct++ >= counter - (previous == null ? 0 : 1)))
+                System.out.println(record.getArea() + " : " + record);
         }
 
         if (dummies > 0) {

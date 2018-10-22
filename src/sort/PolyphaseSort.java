@@ -104,7 +104,7 @@ public class PolyphaseSort {
         System.out.println("BEFORE DISTRIBUTION");
 
         for (Tape tape : tapes) {
-            tape.print();
+            tape.print(true);
         }
         System.out.println("--------------------------------------------");
 
@@ -114,23 +114,25 @@ public class PolyphaseSort {
         System.out.println("\nAFTER DISTRIBUTION");
 
         System.out.println("TAPE: " + tapes.get(0).getFilename());
-        tapes.get(1).print();
-        tapes.get(2).print();
+        tapes.get(1).print(true);
+        tapes.get(2).print(true);
 
         System.out.println("--------------------------------------------");
 
 
         for (int i = 0; i < phaseNumber; i++) {
             System.out.println("\nMERGE " + i);
+
             merge();
-            System.out.println("TAPE: " + tapes.get(0).getFilename());
-            tapes.get(1).print();
-            tapes.get(2).print();
+
+            for (Tape tape : tapes)
+                tape.print(false);
+
             System.out.println("--------------------------------------------");
         }
 
         System.out.println("\nSORTED:");
-        tapes.get(1).print();
+        tapes.get(1).print(true);
     }
 
     public int getPhasesNumber() {
